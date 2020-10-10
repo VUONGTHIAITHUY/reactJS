@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 // import StatelessComponent from "./components/StatelessComponent";
 // import StateFullComponent from "./components/StateFullComponent";
@@ -8,7 +8,10 @@ import "./App.css";
 // import FunctionEvent from "./HandleEvents/FunctionEvent";
 // import ClassEvent from "./HandleEvents/ClassEvent";
 // import DemoConditionalAndState from "./DemoLogIn/DemoConditionalAndState";
-import BaiTapXe from "./BaiTapXe";
+// import BaiTapXe from "./BaiTapXe";
+// import DemoCourse from "./ListAndKeys/DemoCourse";
+// import DemoProps from "./Props/DemoProps";
+import BaiTapGioHang from "./BaiTapGioHang/BaiTapGioHang";
 function App() {
   return (
     <div>
@@ -17,7 +20,10 @@ function App() {
       <FunctionEvent />
       <ClassEvent /> */}
       {/* <DemoConditionalAndState /> */}
-      <BaiTapXe/>
+      {/* <BaiTapXe/> */}
+      {/* <DemoCourse/>
+      <DemoProps/> */}
+      <BaiTapGioHang/>
     </div>
   );
 }

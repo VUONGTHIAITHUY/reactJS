@@ -13,7 +13,7 @@ export default class BaiTapXe extends Component {
   state = {
     imgCar: "./img/car/products/red-car.jpg",
   };
-  SelectCar = (imgCar) => {
+  SelectCar = (imgCar,) => {
     console.log(imgCar);
     this.setState({
       imgCar,//object literal
