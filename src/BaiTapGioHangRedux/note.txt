@@ -1,0 +1,12 @@
+cái state đang lưu ở đâu=> setstate ở đó 
+cái nút click ở đâu, truyên props ở đó
+khi muốn thay đổi giá trị thì lưu vào state
+b=[...a]: tạo vùng địa chỉ để copy b sang a 
+... để copy object hoặc mảng 
+setState là bất đồng bộ 
+javascrip sử lý đơn luồng 
+thằng nào cần tái sử dụng lại
+developer.mozilla.org
+
+câu hỏi phỏng vấn
+redux là gì, vì sao dùng redux 
