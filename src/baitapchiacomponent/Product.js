@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Product(props) {
-  console.log(props);
     return (
         <div className="container">
             <div className="card bg-light" style={{ width: 300 }}>

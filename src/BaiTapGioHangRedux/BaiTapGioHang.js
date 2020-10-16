@@ -14,59 +14,11 @@
 import React, { Component } from "react";
 import SanPham from "./SanPham";
 import Modal from "./Modal";
+import { connect } from "react-redux";
 
-export default class BaiTapGioHang extends Component {
-  danhSachSanPham = [
-    {
-      giaBan: 2000,
-      maSanPham: "1",
-      tenSanPham: "VinSmart Live",
-      hinhAnh: "./img/vsphone.jpg",
-      manHinh: "AMOLED, 6. Full HD",
-      heDieuHanh: "Android 9.0 (Pie)",
-      cameraTruoc: "20 MP",
-      cameraSau: "Chính 48 MP &amp; Phụ 8 MP, 5 MP",
-      ram: "4 GB",
-      rom: "6 GB",
-    },
-    {
-      giaBan: 1500,
-      maSanPham: "2",
-      tenSanPham: "Meizu 16Xs",
-      hinhAnh: "./img/meizuphone.jpg",
-      manHinh: "AMOLED, FHD+ 2232 x 1080 pixels",
-      heDieuHanh: "Android 9.0 (Pie)",
-      cameraTruoc: "20 MP",
-      cameraSau: "Chính 48 MP &amp; Phụ 8 MP, 5 MP",
-      ram: "4 GB",
-      rom: "6 GB",
-    },
-    {
-      giaBan: 3500,
-      maSanPham: "3",
-      tenSanPham: "Iphone XS Max",
-      hinhAnh: "./img/applephone.jpg",
-      manHinh: "OLED, 6.5, 1242 x 2688 Pixels",
-      heDieuHanh: "Android 9.0 (Pie)",
-      cameraTruoc: "20 MP",
-      cameraSau: "Chính 48 MP &amp; Phụ 8 MP, 5 MP",
-      ram: "4 GB",
-      rom: "6 GB",
-    },
-  ];
+class BaiTapGioHang extends Component {
   state = {
-    sanPhamChiTiet: {
-      giaBan: 3500,
-      maSanPham: "1",
-      hinhAnh: "./img/vsphone.jpg",
-      manHinh: "AMOLED, FHD+ 2232 x 1080 pixels",
-      heDieuHanh: "Android 9.0 (Pie)",
-      cameraTruoc: "20 MP",
-      cameraSau: "Chính 48 MP &amp; Phụ 8 MP, 5 MP",
-      ram: "4 GB",
-      rom: "6 GB",
-    },
-    danhSachGioHang: [],
+    openGioHang: false,
   };
   handleDelete = (card) => {
     let danhSachGioHang = this.state.danhSachGioHang;
@@ -78,13 +30,12 @@ export default class BaiTapGioHang extends Component {
   };
 
   handleTangGiam = (card, status) => {
-    console.log(card, status);
     //1.lấy mảng thực hiện
     //2.tìm vị trí của phần tử được nhấn
     //3.check là tăng hay giảm(status)
     //4.cập nhật lại state
     // let danhSachGioHang = this.state.danhSachGioHang;===
-    let { danhSachGioHang } = this.state; //destructering
+    let { danhSachGioHang, sanPhamChiTiet } = this.state; //destructering
     const index = danhSachGioHang.findIndex((item) => {
       return item.maSanPham === card.maSanPham;
     });
@@ -112,7 +63,7 @@ export default class BaiTapGioHang extends Component {
     });
   };
   handleAddSP = (sanPham) => {
-    let danhSachGioHang = this.state.danhSachGioHang;
+    let danhSachGioHang = this.props.danhSachGioHang;
     //tim xe có tồn tại hay chưa
     const index = danhSachGioHang.findIndex((card) => {
       return card.maSanPham === sanPham.maSanPham;
@@ -129,11 +80,11 @@ export default class BaiTapGioHang extends Component {
     this.setState({
       danhSachGioHang: danhSachGioHang,
     });
-    console.log(this.state.danhSachGioHang);
+    console.log(this.danhSachGioHang);
   };
 
   renderDanhSachSanPham = () => {
-    return this.danhSachSanPham.map((sanPham, index) => {
+    return this.props.danhSachSanPham.map((sanPham, index) => {
       return (
         <div className="col-sm-4">
           <SanPham
@@ -145,14 +96,18 @@ export default class BaiTapGioHang extends Component {
       );
     });
   };
-  renderTotal = () => {
-    let { danhSachGioHang } = this.state;
-    let total = danhSachGioHang.reduce((tong, cardHienTai) => {
-      return (tong += cardHienTai.soLuong);
-    }, 0);
-    return total;
-  };
+  // renderTotal = () => {
+  //   let { danhSachGioHang } = this.props;
+  //   let total = danhSachGioHang
+  //     ? danhSachGioHang.reduce((tong, cardHienTai) => {
+  //         return (tong += cardHienTai.soLuong);
+  //       }, 0)
+  //     : 0;
+  //   return total;
+  // };
+
   render() {
+    const openGioHang = this.state.openGioHang;
     return (
       <div>
         <div>
@@ -161,25 +116,26 @@ export default class BaiTapGioHang extends Component {
             <div className="container text-center my-2">
               <button
                 className="btn btn-danger "
-                data-toggle="modal"
-                data-target="#modelId"
+                onClick={() => this.setState({ openGioHang: true })}
               >
-                Giỏ hàng: {this.renderTotal()}
+                Giỏ hàng: {this.props.totalItems}
               </button>
             </div>
             <div className="container">
               <div className="row">{this.renderDanhSachSanPham()}</div>
             </div>
-            <Modal
-              handleTangGiam={this.handleTangGiam}
-              danhSachGioHang={this.state.danhSachGioHang}
-              handleDelete={this.handleDelete}
-            />
+            {this.state.openGioHang && (
+              <Modal
+                handleTangGiam={this.handleTangGiam}
+                // danhSachGioHang={this.props.danhSachGioHang}
+                handleDelete={this.handleDelete}
+              />
+            )}
             <div className="row">
               <div className="col-sm-5">
                 <img
                   className="img-fluid"
-                  src={this.state.sanPhamChiTiet.hinhAnh}
+                  src={this.props.sanPhamChiTiet.hinhAnh}
                   alt=".."
                 />
               </div>
@@ -189,27 +145,27 @@ export default class BaiTapGioHang extends Component {
                   <tbody>
                     <tr>
                       <td>Màn hình</td>
-                      <td>{this.state.sanPhamChiTiet.manHinh}</td>
+                      <td>{this.props.sanPhamChiTiet.manHinh}</td>
                     </tr>
                     <tr>
                       <td>Hệ điều hành</td>
-                      <td>{this.state.sanPhamChiTiet.heDieuHanh}</td>
+                      <td>{this.props.sanPhamChiTiet.heDieuHanh}</td>
                     </tr>
                     <tr>
                       <td>Camera trước</td>
-                      <td>{this.state.sanPhamChiTiet.cameraTruoc}</td>
+                      <td>{this.props.sanPhamChiTiet.cameraTruoc}</td>
                     </tr>
                     <tr>
                       <td>Camera sau</td>
-                      <td>{this.state.sanPhamChiTiet.cameraSau}</td>
+                      <td>{this.props.sanPhamChiTiet.cameraSau}</td>
                     </tr>
                     <tr>
                       <td>RAM</td>
-                      <td>{this.state.sanPhamChiTiet.ram}</td>
+                      <td>{this.props.sanPhamChiTiet.ram}</td>
                     </tr>
                     <tr>
                       <td>ROM</td>
-                      <td>{this.state.sanPhamChiTiet.rom}</td>
+                      <td>{this.props.sanPhamChiTiet.rom}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -221,3 +177,13 @@ export default class BaiTapGioHang extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    // key:value
+    //key là props của component , value là state lưu trữ trên store
+    danhSachSanPham: state.gioHangreducer.danhSachSanPham,
+    sanPhamChiTiet: state.gioHangreducer.sanPhamChiTiet,
+    totalItems: state.gioHangreducer.totalItems,
+  };
+};
+export default connect(mapStateToProps)(BaiTapGioHang);

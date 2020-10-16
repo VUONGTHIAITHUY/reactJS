@@ -11,7 +11,7 @@ import "./App.css";
 // import BaiTapXe from "./BaiTapXe";
 // import DemoCourse from "./ListAndKeys/DemoCourse";
 // import DemoProps from "./Props/DemoProps";
-import BaiTapGioHang from "./BaiTapGioHang/BaiTapGioHang";
+import BaiTapGioHang from "./BaiTapGioHangRedux/BaiTapGioHang";
 function App() {
   return (
     <div>
@@ -23,7 +23,7 @@ function App() {
       {/* <BaiTapXe/> */}
       {/* <DemoCourse/>
       <DemoProps/> */}
-      <BaiTapGioHang/>
+      <BaiTapGioHang />
     </div>
   );
 }

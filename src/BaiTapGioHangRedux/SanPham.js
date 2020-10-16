@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
-export default class SanPham extends Component {
+import {connect} from 'react-redux';
+class SanPham extends Component {
   
   render() {
     return (
@@ -17,3 +17,24 @@ export default class SanPham extends Component {
     );
   }
 }
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    //key:value
+    // key là props của component value là phương thức gửi lên action
+    HandleDetail:(sp)=>{
+      const action ={
+        type:"DETAIL_PRODUCT",
+        payload:sp
+      };
+      dispatch(action);
+    },
+    handleAddSP:(sp)=>{
+      const action={
+        type: "ADD_PRODUCT",
+        payload:sp,
+      };
+      dispatch(action);
+    }
+  };
+};
+export default connect (null,mapDispatchToProps)(SanPham)
